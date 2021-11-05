@@ -28,9 +28,26 @@
 #define GAME_PLAYING 1
 #define GAME_WON 2
 
+// Title
+void printTitle() {
+	printf(	
+" ______     __  __     ______     ______     ______   __         ______     ______     ______                         	\n"
+"/\\  ___\\   /\\ \\_\\ \\   /\\  __ \\   /\\  ___\\   /\\__  _\\ /\\ \\       /\\  ___\\   /\\  ___\\   /\\  ___\\                        	\n"
+"\\ \\ \\__ \\  \\ \\  __ \\  \\ \\ \\/\\ \\  \\ \\___  \\  \\/_/\\ \\/ \\ \\ \\____  \\ \\  __\\   \\ \\___  \\  \\ \\___  \\                       	\n"
+" \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\/\\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\/\\_____\\  \\/\\_____\\                      	\n"
+"  \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/     \\/_/   \\/_____/   \\/_____/   \\/_____/   \\/_____/                      	\n"
+"                                                                                                                      	\n"
+"                                                    ______   ______     ______     __    __     ______     __   __    	\n"
+"                                                   /\\  == \\ /\\  __ \\   /\\  ___\\   /\\ \"-./  \\   /\\  __ \\   /\\ \"-.\\ \\   	\n"
+"                                                   \\ \\  _-/ \\ \\  __ \\  \\ \\ \\____  \\ \\ \\-./\\ \\  \\ \\  __ \\  \\ \\ \\-.  \\  	\n"
+"                                                    \\ \\_\\    \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\\\\"\\_\\ 	\n"
+"                                                     \\/_/     \\/_/\\/_/   \\/_____/   \\/_/  \\/_/   \\/_/\\/_/   \\/_/ \\/_/ 	\n\n\n");
+}
+
 // Instructions
 void instructions() {
 	system("cls");
+	printTitle();
 	printf("Objective:\n"
 				"\tTo simulate the famous Pacman game but without Blink, Pinky, Inky, and Clyde. This makes the game fairly lot simple.\n\n"
 			"Navigation:\n"
@@ -48,8 +65,8 @@ void instructions() {
 // Menus
 int mainMenu() {
 	int option = -1;
+	printTitle();
 	printf(
-		"Ghostless Pac-man:\n"
 		"Choose an option:\n"
 		"(1) Start game\n"
 		"(2) Instructions\n"
@@ -82,10 +99,11 @@ int getFoodRange() {
 void pauseMenu(int *gameState) {
 	system("cls");
 
+	printTitle();
+
 	while (1) {
 		int option = -1;
 		printf(
-			"Ghostless Pac-man:\n"
 			"Choose an option:\n"
 			"(1) Resume game\n"
 			"(2) Instructions\n"
@@ -174,6 +192,7 @@ void generateExit(char map[MAP_X][MAP_Y]) {
 
 void printMap(char map[MAP_X][MAP_Y]) {
 	system("cls");
+	printTitle();
 
 	for (int y = 0; y < MAP_Y; y++) {
 		printf("|");
@@ -185,6 +204,7 @@ void printMap(char map[MAP_X][MAP_Y]) {
 }
 
 void printPlayer(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY) {
+	printTitle();
 	char updatedMap[MAP_X][MAP_Y];
 
 	for (int y = 0; y < MAP_Y; y++)
@@ -288,7 +308,6 @@ int gameLoop(int numOfFoods) {
 
 int main() {
 	system("cls");
-
 	int gameState;
 
 	while (1) {
