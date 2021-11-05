@@ -1,8 +1,9 @@
+// Standard Libraries
 #include <stdio.h>
 #include <ctype.h>
 #include <time.h>
 
-// Windows-Dependent Header Files
+// Windows-Dependent Libraries
 #include <conio.h>
 #include <Windows.h>
 
