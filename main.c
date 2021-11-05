@@ -8,7 +8,11 @@
 #define MAP_Y 10
 #define BLOCKS 10
 
-int menu() {
+void instructions() {
+	getch();
+}
+
+int startingMenu() {
 	int option = -1;
 	printf(
 		"Ghostless Pac-man:\n"
@@ -19,6 +23,7 @@ int menu() {
 		"Enter option: "
 	);
 	scanf("%d", &option);
+	while ((getchar()) != '\n');
 
 	return option;
 }
@@ -29,14 +34,52 @@ int getFoodRange() {
 
 	printf(query);
 	scanf("%d", &range);
+	while ((getchar()) != '\n');
 
 	while (!(range >= 2 && range <= 9)) {
 		printf("Please put a number within the range of 2-9! Please try again.\n");
+		Sleep(1000);
 		printf(query);
 		scanf("%d", &range);
 	}
 
 	return range;
+}
+
+int pauseMenu() {
+	system("cls");
+	printf(
+		"Ghostless Pac-man:\n"
+		"Choose an option :\n"
+		"(1) Resume game\n"
+		"(2) Instructions\n"
+		"(3) Exit\n\n"
+		"Enter option: "
+	);
+		
+	int option = -1;
+	scanf("%d", &option);
+
+	while((getchar())!='\n');
+
+	switch (option) {
+	case 1:
+		break;
+	case 2:
+		instructions();
+		pauseMenu();
+		break;
+	case 3:
+		option = 0;
+		break;
+	default:
+		printf("Please pick within the options!\n");
+		Sleep(1000);
+		pauseMenu();
+		break;
+	}
+	system("cls");
+	return option;
 }
 
 void getUserInput(int* xy) {
@@ -56,6 +99,10 @@ void getUserInput(int* xy) {
 	case 'a':
 		xy[0] += 0;
 		xy[1] += -1;
+		break;
+	case 'm':
+		if (!pauseMenu())
+			xy[0] = 2;
 		break;
 	default:
 		break;
@@ -149,22 +196,20 @@ int gameLoop() {
 		if (_kbhit())
 			getUserInput(&xy);
 
+		if (xy[0] == 2)
+			return 0;
+
 		printf("Remaining food: %d\n", remainingFood);
 
 		Sleep(10);
 	}
 }
 
-void instructions() {
-
-}
-
-
 int main() {
 	system("cls");
 	
 	while (1) {
-		switch (menu()) {
+		switch (startingMenu()) {
 		case 1:
 			gameLoop();
 			break;
@@ -176,6 +221,7 @@ int main() {
 			break;
 		default:
 			printf("Please pick within the options!\n");
+			Sleep(1000);
 			break;
 		}
 		system("cls");
