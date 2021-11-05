@@ -1,3 +1,5 @@
+// HII!!!!
+
 // Standard Libraries
 #include <stdio.h>
 #include <ctype.h>
@@ -34,7 +36,7 @@ void instructions() {
 			"Navigation:\n"
 				"\tTo control Pacman, the characters W, S, A and D are used.W is used to make it move UP, S to move DOWN, A to go LEFT and D to move RIGHT.When Pac - man collides with any part blocks or the boundaries, the game ends and the user loses.\n\n"
 			"Collecting Food:\n"
-				"\tThere will be randomly distributed across the board indicated by ‘ * ’(or any symbol you wish, just add this to your documentation).Points will be accumulated as Pac - man will collect the food. (the number of points will be the programmer’s discretion.) Displaying the points will either be during the game or after the player collects all the food and exits the board.\n\n"
+				"\tThere will be randomly distributed across the board indicated by ï¿½ * ï¿½(or any symbol you wish, just add this to your documentation).Points will be accumulated as Pac - man will collect the food. (the number of points will be the programmerï¿½s discretion.) Displaying the points will either be during the game or after the player collects all the food and exits the board.\n\n"
 			"Blocks:\n"
 				"\tRandomly place blocks across the board.Positions of blocks should be different every time the program is run.\n\n"
 			"Board Exit:\n"
