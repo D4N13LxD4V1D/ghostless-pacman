@@ -2,20 +2,23 @@
 #include <ctype.h>
 #include <time.h>
 
-// Windows-Dependent
+// Windows-Dependent Header Files
 #include <conio.h>
 #include <Windows.h>
 
+// Map Settings
 #define MAP_X 10
 #define MAP_Y 10
 #define BLOCKS 10
 
+// Display Configuration
 #define AIR ' '
 #define BLOCK '#'
 #define FOOD '*'
 #define EXIT '$'
 #define PLAYER 'O'
 
+// Game States
 #define GAME_STOPPED -2
 #define GAME_LOST -1
 #define GAME_PAUSED 0
