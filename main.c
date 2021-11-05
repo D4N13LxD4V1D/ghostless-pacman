@@ -1,22 +1,50 @@
 #include <stdio.h>
-#include <conio.h>
-#include <windows.h>
+#include <ctype.h>
+#include <time.h>
 
-#include <time.h> // for random seed generator
+// Windows-Dpeendent
+#include <conio.h>
+#include <Windows.h>
 
 #define MAP_X 10
 #define MAP_Y 10
 #define BLOCKS 10
 
+#define AIR ' '
+#define BLOCK '#'
+#define FOOD '*'
+#define EXIT '$'
+#define PLAYER 'O'
+
+#define GAME_STOPPED -2
+#define GAME_LOST -1
+#define GAME_PAUSED 0
+#define GAME_PLAYING 1
+#define GAME_WON 2
+
+// Instructions
 void instructions() {
-	getch();
+	system("cls");
+	printf("Objective:\n"
+				"\tTo simulate the famous Pacman game but without Blink, Pinky, Inky, and Clyde. This makes the game fairly lot simple.\n\n"
+			"Navigation:\n"
+				"\tTo control Pacman, the characters W, S, A and D are used.W is used to make it move UP, S to move DOWN, A to go LEFT and D to move RIGHT.When Pac - man collides with any part blocks or the boundaries, the game ends and the user loses.\n\n"
+			"Collecting Food:\n"
+				"\tThere will be randomly distributed across the board indicated by ‘ * ’(or any symbol you wish, just add this to your documentation).Points will be accumulated as Pac - man will collect the food. (the number of points will be the programmer’s discretion.) Displaying the points will either be during the game or after the player collects all the food and exits the board.\n\n"
+			"Blocks:\n"
+				"\tRandomly place blocks across the board.Positions of blocks should be different every time the program is run.\n\n"
+			"Board Exit:\n"
+				"\tHow will the game end with the user winning ? The game will Pacman eats all the food and moves out of the board.There will be a mark on the board on any part of the border to indicate the exit point.Once it steps on the marked exit, the game is done and the player wins.\n\n");
+	_getch();
+	system("cls");
 }
 
-int startingMenu() {
+// Menus
+int mainMenu() {
 	int option = -1;
 	printf(
 		"Ghostless Pac-man:\n"
-		"Choose an option :\n"
+		"Choose an option:\n"
 		"(1) Start game\n"
 		"(2) Instructions\n"
 		"(3) Exit\n\n"
@@ -36,182 +64,233 @@ int getFoodRange() {
 	scanf("%d", &range);
 	while ((getchar()) != '\n');
 
-	while (!(range >= 2 && range <= 9)) {
+	if (!(range >= 2 && range <= 9)) {
 		printf("Please put a number within the range of 2-9! Please try again.\n");
 		Sleep(1000);
-		printf(query);
-		scanf("%d", &range);
+		range = getFoodRange();
 	}
 
 	return range;
 }
 
-int pauseMenu() {
+void pauseMenu(int *gameState) {
 	system("cls");
-	printf(
-		"Ghostless Pac-man:\n"
-		"Choose an option :\n"
-		"(1) Resume game\n"
-		"(2) Instructions\n"
-		"(3) Exit\n\n"
-		"Enter option: "
-	);
-		
-	int option = -1;
-	scanf("%d", &option);
 
-	while((getchar())!='\n');
+	while (1) {
+		int option = -1;
+		printf(
+			"Ghostless Pac-man:\n"
+			"Choose an option:\n"
+			"(1) Resume game\n"
+			"(2) Instructions\n"
+			"(3) Exit\n\n"
+			"Enter option: "
+		);
 
-	switch (option) {
-	case 1:
-		break;
-	case 2:
-		instructions();
-		pauseMenu();
-		break;
-	case 3:
-		option = 0;
-		break;
-	default:
-		printf("Please pick within the options!\n");
-		Sleep(1000);
-		pauseMenu();
-		break;
-	}
-	system("cls");
-	return option;
-}
+		scanf("%d", &option);
+		while ((getchar()) != '\n');
 
-void getUserInput(int* xy) {
-	switch (tolower(getch())) {
-	case 'w':
-		xy[0] += -1;
-		xy[1] += 0;
-		break;
-	case 's':
-		xy[0] += 1;
-		xy[1] += 0;
-		break;
-	case 'd':
-		xy[0] += 0;
-		xy[1] += 1;
-		break;
-	case 'a':
-		xy[0] += 0;
-		xy[1] += -1;
-		break;
-	case 'm':
-		if (!pauseMenu())
-			xy[0] = 2;
-		break;
-	default:
-		break;
-	}
-}
-
-int gameLoop() {
-	srand(time(NULL));
-
-	int range = getFoodRange();
-
-	int map[MAP_X][MAP_Y] = { 0 };				// generate air
-
-	int x = rand() % MAP_X;
-	int y = rand() % MAP_Y;
-
-	map[x][y] = 1;							// generate exit
-
-	int blocks = BLOCKS;
-	while (blocks > 0) {
-		x = rand() % MAP_X;
-		y = rand() % MAP_Y;
-
-		if (map[x][y] == 0) {
-			map[x][y] = 2;					// generate blocks
-			blocks--;
-		}
-	}
-
-	int foodsToPrint = range;
-	while (foodsToPrint > 0) {
-		x = rand() % MAP_X;
-		y = rand() % MAP_Y;
-
-		if (map[x][y] == 0 && x != 0 && y != 0) {
-			map[x][y] = 3;					// generate food
-			foodsToPrint--;
-		}
-	}
-
-	int xy[2] = { 0 };
-	int remainingFood = range;
-
-	while (1) {					// game loop
-		system("cls");
-
-		switch (map[xy[0]][xy[1]]) {		// check user position
-		case 0:
-			map[xy[0]][xy[1]] = 4;
-			break;
+		switch (option) {
 		case 1:
-			if (!remainingFood)
-				return 1;
-			break;
+			*gameState = GAME_PLAYING;
+			return;
 		case 2:
-			return 0;
+			instructions();
 			break;
 		case 3:
-			remainingFood--;
-			map[xy[0]][xy[1]] = 4;
+			*gameState = GAME_STOPPED;
+			return;
+		default:
+			printf("Please pick within the options!\n");
+			Sleep(1000);
 			break;
 		}
-
-		for (int x = 0; x < 10; x++) {
-			printf("|");
-			for (int y = 0; y < 10; y++) {
-				switch (map[x][y]) {
-				case 0:
-					printf(" |");
-					break;
-				case 1:
-					printf("$|");
-					break;
-				case 2:
-					printf("#|");
-					break;
-				case 3:
-					printf("*|");
-					break;
-				case 4:
-					printf("O|");
-					break;
-				}
-			}
-			printf("\n");
-		}
-
-		if (!(remainingFood && map[xy[0]][xy[1]] == 1))
-			map[xy[0]][xy[1]] = 0;						// clear last user position
-
-		if (_kbhit())
-			getUserInput(&xy);
-
-		if (xy[0] == 2)
-			return 0;
-
-		printf("Remaining food: %d\n", remainingFood);
-
-		Sleep(10);
+		system("cls");
 	}
+}
+
+// Game Loop
+
+// Function Declarations
+void generateBlocks(char map[MAP_X][MAP_Y], int range);															// function 1
+void generateFoods(char map[MAP_X][MAP_Y], int range);															// function 2
+int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY, int* remainingFood);		// function 3
+void printPlayerStatus(int gameState, int remainingFood);														// function 4
+
+void fillAir(char map[MAP_X][MAP_Y]) {
+	for (int y = 0; y < MAP_Y; y++)
+		for (int x = 0; x < MAP_X; x++)
+			map[x][y] = AIR;
+}
+
+void generateBlocks(char map[MAP_X][MAP_Y], int numOfBlocks) {
+	int x, y;
+
+	while (numOfBlocks > 0) {
+		x = rand() % MAP_X;
+		y = rand() % MAP_Y;
+
+		if (map[x][y] == AIR && !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0)) {
+			map[x][y] = BLOCK;
+			numOfBlocks--;
+		}
+	}
+}
+
+void generateFoods(char map[MAP_X][MAP_Y], int numOfFoods) {
+	int x, y;
+
+	while (numOfFoods > 0) {
+		x = rand() % MAP_X;
+		y = rand() % MAP_Y;
+
+		if (map[x][y] && !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0)) {
+			map[x][y] = FOOD;
+			numOfFoods--;
+		}
+	}
+}
+
+void generateExit(char map[MAP_X][MAP_Y]) {
+	int x, y;
+	int numberOfExits = 1;
+
+	while (numberOfExits > 0) {
+		x = rand() % MAP_X;
+		y = rand() % MAP_Y;
+
+		if (map[x][y] == AIR && !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0)) {
+			map[x][y] = EXIT;
+			numberOfExits--;
+		}
+	}
+}
+
+void printMap(char map[MAP_X][MAP_Y]) {
+	system("cls");
+
+	for (int y = 0; y < MAP_Y; y++) {
+		printf("|");
+		for (int x = 0; x < MAP_X; x++) {
+			printf("%c|", map[x][y]);
+		}
+		printf("\n");
+	}
+}
+
+void printPlayer(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY) {
+	char updatedMap[MAP_X][MAP_Y];
+
+	for (int y = 0; y < MAP_Y; y++)
+		for (int x = 0; x < MAP_X; x++)
+			updatedMap[x][y] = map[x][y];
+
+	updatedMap[playerPositionX][playerPositionY] = PLAYER;
+	printMap(updatedMap);
+
+	if (map[playerPositionX][playerPositionY] == FOOD)
+		map[playerPositionX][playerPositionY] = AIR;
+}
+
+int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY, int *remainingFood) {
+	if (playerPositionX < 0 || playerPositionX > MAP_X || playerPositionY < 0 || playerPositionY > MAP_Y)
+		return GAME_LOST;
+	switch (map[playerPositionX][playerPositionY]) {
+	case BLOCK:
+		return GAME_LOST;
+	case FOOD:
+		(*remainingFood)--;
+		return GAME_PLAYING;
+	case EXIT:
+		if (!(*remainingFood))
+			return GAME_WON;
+	default:
+		return GAME_PLAYING;
+	}
+}
+
+void getUserInput(int *playerX, int *playerY, int *gameState) {
+	switch (tolower(_getch())) {
+	case 'm':
+		*gameState = GAME_PAUSED;
+		break;
+	case 'w':
+		*playerY += -1;
+		break;
+	case 's':
+		*playerY += 1;
+		break;
+	case 'd':
+		*playerX += 1;
+		break;
+	case 'a':
+		*playerX += -1;
+		break;
+	}
+}
+
+void printPlayerStatus(int gameState, int remainingFood) {
+	switch (gameState) {
+	case GAME_PLAYING:
+		printf("Game is running! (Remaining Food: %d)\n", remainingFood);
+		break;
+	case GAME_WON:
+		printf("You won!\n");
+		_getch();
+		break;
+	case GAME_LOST:
+		printf("You lost!\n");
+		_getch();
+		break;
+	}
+}
+
+int gameLoop(int numOfFoods) {
+	srand(time(NULL));
+
+	char map[MAP_X][MAP_Y];
+	int remainingFood = numOfFoods;
+	int gameState = GAME_PLAYING;
+	int playerX = 0, playerY = 0;
+
+	fillAir(map);
+	generateBlocks(map, BLOCKS);
+	generateFoods(map, numOfFoods);
+	generateExit(map);
+
+	printPlayer(map, playerX, playerY);
+	printPlayerStatus(gameState, remainingFood);
+
+	while (gameState == GAME_PLAYING) {
+		if (_kbhit()) {
+			getUserInput(&playerX, &playerY, &gameState);
+
+			if (gameState == GAME_PAUSED)
+				pauseMenu(&gameState);
+
+			if (gameState != GAME_STOPPED)
+				gameState = checkGameStatus(map, playerX, playerY, &remainingFood);
+
+			printPlayer(map, playerX, playerY);
+			printPlayerStatus(gameState, remainingFood);
+		}
+	}
+	system("cls");
+
+	return gameState;
 }
 
 int main() {
 	system("cls");
-	
+
+	int gameState;
+
 	while (1) {
-		switch (startingMenu()) {
+		switch (mainMenu()) {
 		case 1:
-			gameLoop();
+			gameState = gameLoop(getFoodRange());
+			if (gameState == GAME_STOPPED)
+				return 0;
 			break;
 		case 2:
 			instructions();
@@ -226,6 +305,5 @@ int main() {
 		}
 		system("cls");
 	}
-
 	return 0;
 }
