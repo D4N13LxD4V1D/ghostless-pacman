@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <time.h>
 
-// Windows-Dpeendent
+// Windows-Dependent
 #include <conio.h>
 #include <Windows.h>
 
