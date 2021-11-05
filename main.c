@@ -62,7 +62,7 @@ void getUserInput(int* xy) {
 	}
 }
 
-void gameLoop() {
+int gameLoop() {
 	srand(time(NULL));
 
 	int range = getFoodRange();
@@ -98,9 +98,8 @@ void gameLoop() {
 
 	int xy[2] = { 0 };
 	int remainingFood = range;
-	int userStatus = 1;						// 1 = Alive, 0 = Dead, 2 = Win
 
-	while (userStatus) {					// game loop
+	while (1) {					// game loop
 		system("cls");
 
 		switch (map[xy[0]][xy[1]]) {		// check user position
@@ -109,10 +108,10 @@ void gameLoop() {
 			break;
 		case 1:
 			if (!remainingFood)
-				userStatus = 2;
+				return 1;
 			break;
 		case 2:
-			userStatus = 0;
+			return 0;
 			break;
 		case 3:
 			remainingFood--;
@@ -150,7 +149,6 @@ void gameLoop() {
 		if (_kbhit())
 			getUserInput(&xy);
 
-		printf("User Status: %d\n", userStatus);
 		printf("Remaining food: %d\n", remainingFood);
 
 		Sleep(10);
