@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include <windows.h>
 
 #include <time.h> // for random seed generator
@@ -9,7 +8,7 @@
 #define BLOCKS 10
 
 void instructions() {
-	getch();
+	getchar();
 }
 
 int startingMenu() {
@@ -83,7 +82,7 @@ int pauseMenu() {
 }
 
 void getUserInput(int* xy) {
-	switch (tolower(getch())) {
+	switch (tolower(getchar())) {
 	case 'w':
 		xy[0] += -1;
 		xy[1] += 0;
