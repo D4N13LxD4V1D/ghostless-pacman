@@ -1,5 +1,3 @@
-// HII!!!!
-
 // Standard Libraries
 #include <stdio.h>
 #include <ctype.h>
@@ -58,6 +56,7 @@ void instructions() {
 				"\tRandomly place blocks across the board.Positions of blocks should be different every time the program is run.\n\n"
 			"Board Exit:\n"
 				"\tHow will the game end with the user winning ? The game will Pacman eats all the food and moves out of the board.There will be a mark on the board on any part of the border to indicate the exit point.Once it steps on the marked exit, the game is done and the player wins.\n\n");
+	printf("Press any key to continue... ");
 	_getch();
 	system("cls");
 }
@@ -80,8 +79,11 @@ int mainMenu() {
 }
 
 int getFoodRange() {
+	system("cls");
+	printTitle();
+
 	int range;
-	char query[] = "How many food do you want to be distributed in the board? (range of 2-9)\t";
+	char query[] = "How many food do you want to be distributed in the board? (range of 2-9): ";
 
 	printf(query);
 	scanf("%d", &range);
@@ -101,36 +103,37 @@ void pauseMenu(int *gameState) {
 
 	printTitle();
 
-	while (1) {
-		int option = -1;
-		printf(
-			"Choose an option:\n"
-			"(1) Resume game\n"
-			"(2) Instructions\n"
-			"(3) Exit\n\n"
-			"Enter option: "
-		);
+	int option = -1;
+	printf(
+		"Choose an option:\n"
+		"(1) Resume game\n"
+		"(2) Instructions\n"
+		"(3) Exit\n\n"
+		"Enter option: "
+	);
 
-		scanf("%d", &option);
-		while ((getchar()) != '\n');
+	scanf("%d", &option);
+	while ((getchar()) != '\n');
 
-		switch (option) {
-		case 1:
-			*gameState = GAME_PLAYING;
-			return;
-		case 2:
-			instructions();
-			break;
-		case 3:
-			*gameState = GAME_STOPPED;
-			return;
-		default:
-			printf("Please pick within the options!\n");
-			Sleep(1000);
-			break;
-		}
-		system("cls");
+	switch (option) {
+	case 1:
+		*gameState = GAME_PLAYING;
+		return;
+	case 2:
+		instructions();
+		pauseMenu(gameState);
+		break;
+	case 3:
+		*gameState = GAME_STOPPED;
+		return;
+	default:
+		printf("Please pick within the options!\n");
+		Sleep(1000);
+		pauseMenu(gameState);
+		break;
 	}
+
+	system("cls");
 }
 
 // Game Loop
@@ -219,8 +222,9 @@ void printPlayer(char map[MAP_X][MAP_Y], int playerPositionX, int playerPosition
 }
 
 int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY, int *remainingFood) {
-	if (playerPositionX < 0 || playerPositionX > MAP_X || playerPositionY < 0 || playerPositionY > MAP_Y)
+	if (playerPositionX < 0 || playerPositionX > MAP_X - 1 || playerPositionY < 0 || playerPositionY > MAP_Y - 1)
 		return GAME_LOST;
+		
 	switch (map[playerPositionX][playerPositionY]) {
 	case BLOCK:
 		return GAME_LOST;
@@ -258,7 +262,11 @@ void getUserInput(int *playerX, int *playerY, int *gameState) {
 void printPlayerStatus(int gameState, int remainingFood) {
 	switch (gameState) {
 	case GAME_PLAYING:
-		printf("Game is running! (Remaining Food: %d)\n", remainingFood);
+		printf("Game is running! ");
+
+		if (remainingFood != 0)
+			printf("(Remaining Food: %d)\n", remainingFood);
+
 		break;
 	case GAME_WON:
 		printf("You won!\n");
