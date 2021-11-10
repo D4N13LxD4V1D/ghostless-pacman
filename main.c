@@ -90,7 +90,7 @@ int getFoodRange() {
 	while ((getchar()) != '\n');
 
 	if (!(range >= 2 && range <= 9)) {
-		printf("Please put a number within the range of 2-9! Please try again.\n");
+		printf("Please put a number within the range of 2-9! Please try again.");
 		Sleep(1000);
 		range = getFoodRange();
 	}
@@ -127,7 +127,7 @@ void pauseMenu(int *gameState) {
 		*gameState = GAME_STOPPED;
 		return;
 	default:
-		printf("Please pick within the options!\n");
+		printf("Please pick within the options!");
 		Sleep(1000);
 		pauseMenu(gameState);
 		break;
@@ -329,14 +329,16 @@ int main() {
 			instructions();
 			break;
 		case 3:
+			system("cls");
 			return 0;
 			break;
 		default:
-			printf("Please pick within the options!\n");
+			printf("Please pick within the options!");
 			Sleep(1000);
 			break;
 		}
 		system("cls");
 	}
+	
 	return 0;
 }
