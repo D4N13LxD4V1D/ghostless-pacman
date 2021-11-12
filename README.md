@@ -3,6 +3,9 @@ An implementation of Pacman (without the ghosts) in C!
 
 ## Gameplay
 
+## Requirements
+The game only runs on Windows currently.
+
 ## Running the Game
 To build and run the code from source, follow the following steps:
 1. Download the source of the game by cloning this repository or by downloading it as ZIP file and extracting it to your preffered directory.
