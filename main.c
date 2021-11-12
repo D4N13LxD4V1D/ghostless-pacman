@@ -256,25 +256,61 @@ void getUserInput(int *playerX, int *playerY, int *gameState) {
 	case 'a':
 		*playerX += -1;
 		break;
+	default:
+		break;
 	}
+}
+
+void printWon() {
+	system("cls");
+	printTitle();
+	printf(
+		" __  __     ______     __  __                                                           \n"
+		"/\\ \\_\\ \\   /\\  __ \\   /\\ \\/\\ \\                                                          \n"
+		"\\ \\____ \\  \\ \\ \\/\\ \\  \\ \\ \\_\\ \\                                                         \n"
+		" \\/\\_____\\  \\ \\_____\\  \\ \\_____\\                                                        \n"
+		"  \\/_____/   \\/_____/   \\/_____/                                                        \n"
+		"                                                                                        \n"
+		"                                                    __     __     ______     __   __    \n"
+		"                                                   /\\ \\  _ \\ \\   /\\  __ \\   /\\ \"-.\\ \\   \n"
+		"                                                   \\ \\ \\/ \".\\ \\  \\ \\ \\/\\ \\  \\ \\ \\-.  \\  \n"
+		"                                                    \\ \\__/\".~\\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\ \n"
+		"                                                     \\/_/   \\/_/   \\/_____/   \\/_/ \\/_/ \n");
+	_getch();
+}
+
+void printLost() {
+	system("cls");
+	printTitle();
+	printf(
+		" __  __     ______     __  __                                                                \n"
+		"/\\ \\_\\ \\   /\\  __ \\   /\\ \\/\\ \\                                                               \n"
+		"\\ \\____ \\  \\ \\ \\/\\ \\  \\ \\ \\_\\ \\                                                              \n"
+		" \\/\\_____\\  \\ \\_____\\  \\ \\_____\\                                                             \n"
+		"  \\/_____/   \\/_____/   \\/_____/                                                             \n"
+		"                                                                                             \n"
+		"                                                    __         ______     ______     ______  \n"
+		"                                                   /\\ \\       /\\  __ \\   /\\  ___\\   /\\__  _\\ \n"
+		"                                                   \\ \\ \\____  \\ \\ \\/\\ \\  \\ \\___  \\  \\/_/\\ \\/ \n"
+		"                                                    \\ \\_____\\  \\ \\_____\\  \\/\\_____\\    \\ \\_\\ \n"
+		"                                                     \\/_____/   \\/_____/   \\/_____/     \\/_/ \n");
+	_getch();
 }
 
 void printPlayerStatus(int gameState, int remainingFood) {
 	switch (gameState) {
-	case GAME_PLAYING:
+	/*case GAME_PLAYING:
 		printf("Game is running! ");
 
 		if (remainingFood != 0)
-			printf("(Remaining Food: %d)\n", remainingFood);
+			printf("Remaining Food: %d\n", remainingFood);
 
-		break;
+		break;*/
 	case GAME_WON:
-		printf("You won!\n");
-		_getch();
+		printWon();
 		break;
 	case GAME_LOST:
-		printf("You lost!\n");
-		_getch();
+		printLost();
 		break;
 	}
 }
