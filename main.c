@@ -198,7 +198,7 @@ void printMap(char map[MAP_X][MAP_Y]) {
 	printTitle();
 
 	for (int y = 0; y < MAP_Y; y++) {
-		printf("|");
+		printf("\t\t\t\t\t\t|");
 		for (int x = 0; x < MAP_X; x++) {
 			printf("%c|", map[x][y]);
 		}
