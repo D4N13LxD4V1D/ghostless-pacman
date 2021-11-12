@@ -14,7 +14,7 @@ To build and run the code from source, follow the following steps:
 ```batch
 gcc main.c -o main
 
-./main
+./main.exe
 ``` 
 
 ## Known Bugs
