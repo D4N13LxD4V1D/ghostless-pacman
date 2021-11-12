@@ -240,20 +240,20 @@ int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPosit
 }
 
 void getUserInput(int *playerX, int *playerY, int *gameState) {
-	switch (tolower(_getch())) {
-	case 'm':
+	switch (toupper(_getch())) {
+	case 'M':
 		*gameState = GAME_PAUSED;
 		break;
-	case 'w':
+	case 'W':
 		*playerY += -1;
 		break;
-	case 's':
+	case 'S':
 		*playerY += 1;
 		break;
-	case 'd':
+	case 'D':
 		*playerX += 1;
 		break;
-	case 'a':
+	case 'A':
 		*playerX += -1;
 		break;
 	default:
