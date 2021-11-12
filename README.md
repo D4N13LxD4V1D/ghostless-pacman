@@ -2,7 +2,7 @@
 An implementation of Pacman (without the ghosts) in C!
 
 ## Gameplay
-![General Gameplay](https://i.imgur.com/UYkgpgu.gif)
+![General Gameplay](https://i.imgur.com/rb9HFrf.gif)
 
 ## Requirements
 The game only runs on Windows currently.
