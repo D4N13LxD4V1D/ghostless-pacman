@@ -6,16 +6,16 @@ The objective of this project is to simulate the famous Pacman game but without 
 ## Gameplay
 ![General Gameplay](https://i.imgur.com/rb9HFrf.gif)
 
-Navigation:
+### Navigation
 To control Pac-man, the characters W,S,A and D are used. W is used to make it move UP, S to move DOWN, A to go LEFT and D to move RIGHT. When Pac-man collides with any part blocks or the boundaries, the game ends and the user loses.
 
-Collecting Food:
+### Collecting Food
 There will be randomly distributed across the board indicated by ‘\*’. Points will be accumulated as Pac-man will collect the food. (the number of points will be the programmer’s discretion.) Displaying the points will either be during the game or after the player collects all the food and exits the board.
 
-Blocks:
+### Blocks
 Randomly place blocks across the board. Positions of blocks should be different every time the program is run.
 
-Board Exit:
+### Board Exit
 How will the game end with the user winning? The game will Pacman eats all the food and moves out of the board. There will be a mark on the board on any part of the border to indicate the exit point. Once it steps on the marked exit, the game is done and the player wins.
 
 ## Requirements
