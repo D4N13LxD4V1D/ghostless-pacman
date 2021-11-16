@@ -234,6 +234,7 @@ int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPosit
 	case EXIT:
 		if (!(*remainingFood))
 			return GAME_WON;
+		break;
 	default:
 		return GAME_PLAYING;
 	}
