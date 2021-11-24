@@ -207,7 +207,6 @@ void printMap(char map[MAP_X][MAP_Y]) {
 }
 
 void printPlayer(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY) {
-	printTitle();
 	char updatedMap[MAP_X][MAP_Y];
 
 	for (int y = 0; y < MAP_Y; y++)
