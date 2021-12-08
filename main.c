@@ -169,7 +169,7 @@ void generateFoods(char map[MAP_X][MAP_Y], int numOfFoods) {
 		x = rand() % MAP_X;
 		y = rand() % MAP_Y;
 
-		if (map[x][y] && !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0)) {
+		if (map[x][y] == AIR && !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0)) {
 			map[x][y] = FOOD;
 			numOfFoods--;
 		}
