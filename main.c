@@ -46,17 +46,15 @@ void printTitle() {
 void instructions() {
 	system("cls");
 	printTitle();
-	printf("Objective:\n"
-				"\tTo simulate the famous Pacman game but without Blink, Pinky, Inky, and Clyde. This makes the game fairly lot simple.\n\n"
-			"Navigation:\n"
-				"\tTo control Pacman, the characters W, S, A and D are used.W is used to make it move UP, S to move DOWN, A to go LEFT and D to move RIGHT.When Pac - man collides with any part blocks or the boundaries, the game ends and the user loses.\n\n"
-			"Collecting Food:\n"
-				"\tThere will be randomly distributed across the board indicated by '*' (or any symbol you wish, just add this to your documentation).Points will be accumulated as Pac - man will collect the food. (the number of points will be the programmer's discretion.) Displaying the points will either be during the game or after the player collects all the food and exits the board.\n\n"
-			"Blocks:\n"
-				"\tRandomly place blocks across the board.Positions of blocks should be different every time the program is run.\n\n"
-			"Board Exit:\n"
-				"\tHow will the game end with the user winning ? The game will Pacman eats all the food and moves out of the board.There will be a mark on the board on any part of the border to indicate the exit point.Once it steps on the marked exit, the game is done and the player wins.\n\n");
-	printf("Press any key to continue... ");
+	printf("+ Objective:\n\n"
+				"    - Collect all foods before entering the exit to win the game.\n\n"
+			"+ Navigation:\n\n"
+				"    - To control Pacman, the characters W, S, A and D are used. W is used to make it move UP, S to move DOWN, A to go LEFT and D to move RIGHT. When Pacman collides with any blocks, boundaries or the exit without eating all the food, the game ends and you loses.\n\n"
+			"+ Collecting Food:\n\n"
+				"    - Foods will be randomly distributed across the board indicated by '*'. A progress indicator at the bottom left of the game will indicate your food collection progress.\n\n"
+			"+ Exit:\n\n"
+				"    - The game will end when Pacman eats all the food and enters the exit. There will be a '$' to indicate the exit point. Once Pacman steps on the exit after collecting all the foods, the game will be done and the you will win.\n\n");
+	printf("\nPress any key to continue... ");
 	_getch();
 	system("cls");
 }
