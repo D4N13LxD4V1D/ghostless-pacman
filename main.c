@@ -142,7 +142,7 @@ void pauseMenu(int *gameState) {
 void generateBlocks(char map[MAP_X][MAP_Y], int range);															// function 1
 void generateFoods(char map[MAP_X][MAP_Y], int range);															// function 2
 int checkGameStatus(char map[MAP_X][MAP_Y], int playerPositionX, int playerPositionY, int* remainingFood);		// function 3
-void printPlayerStatus(int gameState, int remainingFood);														// function 4
+void printPlayerStatus(int gameState, int remainingFood, int numOfFoods);										// function 4
 
 void fillAir(char map[MAP_X][MAP_Y]) {
 	for (int y = 0; y < MAP_Y; y++)
@@ -299,15 +299,11 @@ void printLost() {
 	_getch();
 }
 
-void printPlayerStatus(int gameState, int remainingFood) {
+void printPlayerStatus(int gameState, int remainingFood, int numOfFoods) {
 	switch (gameState) {
-	/*case GAME_PLAYING:
-		printf("Game is running! ");
-
-		if (remainingFood != 0)
-			printf("Remaining Food: %d\n", remainingFood);
-
-		break;*/
+	case GAME_PLAYING:
+		printf("Progress: %2.f\%\n", ((float) numOfFoods - (float) remainingFood) /(float)  numOfFoods * 100.0);
+		break;
 	case GAME_WON:
 		printWon();
 		break;
@@ -331,7 +327,7 @@ int gameLoop(int numOfFoods) {
 	generateExit(map);
 
 	printPlayer(map, playerX, playerY);
-	printPlayerStatus(gameState, remainingFood);
+	printPlayerStatus(gameState, remainingFood, numOfFoods);
 
 	while (gameState == GAME_PLAYING) {
 		if (_kbhit()) {
@@ -344,7 +340,7 @@ int gameLoop(int numOfFoods) {
 				gameState = checkGameStatus(map, playerX, playerY, &remainingFood);
 
 			printPlayer(map, playerX, playerY);
-			printPlayerStatus(gameState, remainingFood);
+			printPlayerStatus(gameState, remainingFood, numOfFoods);
 		}
 	}
 	system("cls");
