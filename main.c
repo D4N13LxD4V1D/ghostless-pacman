@@ -197,11 +197,21 @@ void printMap(char map[MAP_X][MAP_Y]) {
 	system("cls");
 	printTitle();
 
+	printf("\t\t\t\t\t+");
+	for (int x=0; x< MAP_X; x++) 
+		printf("---+");
+	printf("\n");
+
 	for (int y = 0; y < MAP_Y; y++) {
-		printf("\t\t\t\t\t\t|");
+		printf("\t\t\t\t\t|");
 		for (int x = 0; x < MAP_X; x++) {
-			printf("%c|", map[x][y]);
+			printf(" %c |", map[x][y]);
 		}
+		printf("\n");
+		
+		printf("\t\t\t\t\t+");
+		for (int x=0; x< MAP_X; x++) 
+			printf("---+");
 		printf("\n");
 	}
 }
